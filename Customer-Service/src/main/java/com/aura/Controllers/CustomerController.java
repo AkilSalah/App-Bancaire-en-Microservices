@@ -21,7 +21,6 @@ public class CustomerController {
         return customerService.saveCustomer(customerRequest);
     }
 
-
     @GetMapping("/{id}")
     public CustomerResponse getCustomer(@PathVariable Long id) {
         return customerService.getCustomer(id);
