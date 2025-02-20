@@ -11,7 +11,7 @@
         <module name="Config-Service" />
         <module name="Discovery-Service" />
       </profile>
-      <profile name="Annotation profile for Account-Service" enabled="true">
+      <profile name="Annotation profile for Customer-Service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
