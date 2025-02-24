@@ -42,5 +42,20 @@ public class CustomerImpl implements CustomerInterface {
                 .map(customerMapper::toResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CustomerResponse updateCustomer(Long id, CustomerRequest customerRequest) {
+        Customer existingCustomer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+        customerMapper.updateCustomerFromRequest(customerRequest ,existingCustomer);
+        Customer updatedCustomer = customerRepository.save(existingCustomer);
+        return customerMapper.toResponse(updatedCustomer);
+    }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+        customerRepository.delete(customer);
+
+    }
 }
 

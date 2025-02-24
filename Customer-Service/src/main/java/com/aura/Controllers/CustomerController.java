@@ -5,6 +5,7 @@ import com.aura.DTO.CustomerRequest;
 import com.aura.DTO.CustomerResponse;
 import com.aura.Services.Interfaces.CustomerInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,5 +30,15 @@ public class CustomerController {
     @GetMapping
     public List<CustomerResponse> getAllCustomers() {
         return customerService.getAllCustomers();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable Long id, @RequestBody CustomerRequest customerRequest) {
+        CustomerResponse customerResponse = customerService.updateCustomer(id, customerRequest);
+        return ResponseEntity.ok(customerResponse);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomerResponse> deleteCustomer(@PathVariable Long id) {
+        customerService.deleteCustomer(id);
+        return ResponseEntity.ok().build();
     }
 }

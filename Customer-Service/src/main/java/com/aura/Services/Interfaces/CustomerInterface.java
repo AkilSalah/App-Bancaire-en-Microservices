@@ -9,4 +9,6 @@ public interface CustomerInterface {
     CustomerResponse saveCustomer(CustomerRequest customerRequest);
     CustomerResponse getCustomer(Long id);
     List<CustomerResponse> getAllCustomers();
+    CustomerResponse updateCustomer(Long id, CustomerRequest customerRequest);
+    void deleteCustomer(Long id);
 }
