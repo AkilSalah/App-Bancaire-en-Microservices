@@ -9,7 +9,7 @@ const api = axios.create({
 });
 export const customerService = {
     getAllCustomers : async() : Promise<Customer[]> =>{
-        const response = await api.get('api/customers');
+        const response = await api.get(`api/customers`);
         return response.data;
     },
 
@@ -29,3 +29,5 @@ export const customerService = {
         await api.delete(`/api/customers/${id}`);
     }
 };
+
+export default api;
