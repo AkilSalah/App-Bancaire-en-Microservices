@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { customerService } from "../Services/Api";
-import { Customer } from "../Models/Customer";
+import { Customer } from '../Models/Customer';
 
 const CustomerList: React.FC = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -28,11 +28,46 @@ const CustomerList: React.FC = () => {
   return (
     <div>
       <h2>Liste des Clients</h2>
-      <ul>
-        {customers.map((customer) => (
-          <li key={customer.id}>{customer.name}</li>
-        ))}
-      </ul>
+      <div className="font-sans overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-100 whitespace-nowrap">
+            <tr>
+              <th className="px-4 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
+              <th className="px-4 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th className="px-4 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-4 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Actions
+              </th>
+            </tr>
+          </thead>
+
+          <tbody className="bg-white divide-y divide-gray-200 whitespace-nowrap">
+            {customers.map((customer) => (
+              <tr key={customer.id}>
+                <td className="px-4 py-4 text-sm text-gray-800">
+                  {customer.id}
+                </td>
+                <td className="px-4 py-4 text-sm text-gray-800">
+                  {customer.name}
+                </td>
+                <td className="px-4 py-4 text-sm text-gray-800">
+                  {customer.email}
+                </td>
+                <td className="px-4 py-4 text-sm text-gray-800">
+                  <button className="text-blue-600 mr-4">Edit</button>
+                  <button className="text-red-600">Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
