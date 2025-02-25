@@ -22,11 +22,12 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional
 @AllArgsConstructor
-public class AccountIml implements AccountService {
+public class AccountImpl implements AccountService {
 
-    private AccountRepository accountRepository;
-    private AccountMapper accountMapper;
-    private RestTemplate restTemplate;
+    private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
+
+    private final RestTemplate template;
 
 
     @Override
@@ -36,7 +37,7 @@ public class AccountIml implements AccountService {
         }
         String customerUrl = "http://CUSTOMER-SERVICE/api/customers/" + accountRequest.getCustomerId();
         try {
-            ResponseEntity<Void> response = restTemplate.getForEntity(customerUrl, Void.class);
+            ResponseEntity<Void> response = template.getForEntity(customerUrl, Void.class);
 
             if (response.getStatusCode() != HttpStatus.OK) {
                 throw new RuntimeException("Customer not found with ID: " + accountRequest.getCustomerId());
@@ -70,6 +71,29 @@ public class AccountIml implements AccountService {
                 .stream()
                 .map(accountMapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public AccountResponse updateAccount(AccountRequest accountRequest, Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(
+                () ->  new  RuntimeException("Account not found")
+        );
+        String customerUrl = "http://CUSTOMER-SERVICE/api/customers/" + accountRequest.getCustomerId();
+        ResponseEntity<Void> response = template.getForEntity(customerUrl, Void.class);
+        if (response.getStatusCode() != HttpStatus.OK) {
+            throw new RuntimeException("Customer not found with ID: " + accountRequest.getCustomerId());
+        }
+        accountMapper.updateAccountFromRequest(accountRequest , account);
+        Account updatedAccount = accountRepository.save(account);
+        return accountMapper.toResponse(updatedAccount);
+    }
+
+    @Override
+    public void deleteAccount(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(
+                () -> new  RuntimeException("Account not found")
+        );
+        accountRepository.delete(account);
     }
 }
 

@@ -4,7 +4,7 @@ import com.aura.DTOs.AccountResponse;
 import com.aura.Entities.Account;
 import com.aura.Mapper.AccountMapper;
 import com.aura.Repositories.AccountRepository;
-import com.aura.Services.Implementations.AccountIml;
+import com.aura.Services.Implementations.AccountImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AccountImlTest {
+class AccountImplTest {
 
     @Mock
     private AccountRepository accountRepository;
@@ -39,7 +39,7 @@ class AccountImlTest {
     private RestTemplate restTemplate;
 
     @InjectMocks
-    private AccountIml accountService;
+    private AccountImpl accountService;
 
     private AccountRequest accountRequest;
     private Account account;

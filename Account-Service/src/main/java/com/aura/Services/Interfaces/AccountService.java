@@ -9,4 +9,6 @@ public interface AccountService {
     AccountResponse createAccount(AccountRequest accountRequest);
     AccountResponse getAccount(Long id);
     List<AccountResponse> getAccountsByCustomerId(Long customerId);
+    AccountResponse updateAccount(AccountRequest accountRequest, Long id);
+    void deleteAccount(Long id);
 }

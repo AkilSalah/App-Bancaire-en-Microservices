@@ -4,6 +4,7 @@ import com.aura.DTOs.AccountRequest;
 import com.aura.DTOs.AccountResponse;
 import com.aura.Services.Interfaces.AccountService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/accounts")
 @Slf4j
+@AllArgsConstructor
 public class AccountController {
-    private final AccountService accountService;
 
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
+    private final AccountService accountService;
 
     @PostMapping
     public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody AccountRequest accountRequest) {
@@ -43,6 +42,18 @@ public class AccountController {
     @GetMapping("/customer/{customerId}")
     public List<AccountResponse> getAccountsByCustomerId(@PathVariable Long customerId) {
         return accountService.getAccountsByCustomerId(customerId);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<AccountResponse> updateAccount(@PathVariable Long id, @Valid @RequestBody AccountRequest accountRequest) {
+        log.info("Received request to update account: {}", accountRequest);
+        AccountResponse response = accountService.updateAccount(accountRequest,id);
+        return ResponseEntity.ok(response);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long id) {
+        log.info("Received request to delete account: {}", id);
+        accountService.deleteAccount(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
