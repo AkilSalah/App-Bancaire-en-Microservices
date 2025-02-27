@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Customer } from '../Models/Customer';
+import { Account } from '../Models/Account';
 
 const api = axios.create({
     baseURL : 'http://localhost:8080',
@@ -28,6 +29,23 @@ export const customerService = {
     },
     deleteCustomer : async (id:number) : Promise<void> =>{
         await api.delete(`/api/customers/${id}`);
+    }
+};
+export const accountService = {
+    getAllAccounts : async() : Promise<Account[]> =>{
+        const response = await api.get(`api/accounts`);
+        return response.data;
+    },
+    createAccount : async(data: Omit<Account, 'id'>) :Promise<Account> => {
+        const response = await api.post(`/api/accounts`, data);
+        return response.data
+    },
+    updateAccount: async (id: number, data: Partial<Account>): Promise<Account> => {
+        const response = await api.put(`/api/accounts/${id}`, data);
+        return response.data;
+    },
+    deleteAccount : async (id:number) : Promise<void> =>{
+        await api.delete(`/api/accounts/${id}`);
     }
 };
 
