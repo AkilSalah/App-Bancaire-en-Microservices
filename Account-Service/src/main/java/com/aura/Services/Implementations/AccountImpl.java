@@ -95,6 +95,12 @@ public class AccountImpl implements AccountService {
         );
         accountRepository.delete(account);
     }
+
+    @Override
+    public List<AccountResponse> getAllAccounts() {
+        List<Account> accounts = accountRepository.findAll();
+        return accounts.stream().map(accountMapper::toResponse).collect(Collectors.toList());
+    }
 }
 
 

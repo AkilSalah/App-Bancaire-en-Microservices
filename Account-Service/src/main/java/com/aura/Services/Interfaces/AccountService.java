@@ -11,4 +11,5 @@ public interface AccountService {
     List<AccountResponse> getAccountsByCustomerId(Long customerId);
     AccountResponse updateAccount(AccountRequest accountRequest, Long id);
     void deleteAccount(Long id);
+    List<AccountResponse> getAllAccounts();
 }

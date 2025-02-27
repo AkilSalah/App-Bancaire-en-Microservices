@@ -55,5 +55,10 @@ public class AccountController {
         accountService.deleteAccount(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping
+    public ResponseEntity<List<AccountResponse>> getAccounts() {
+        List<AccountResponse> allAccounts = accountService.getAllAccounts();
+        return ResponseEntity.ok(allAccounts);
+    }
 
 }
