@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CustomerList from "./components/CustomerList";
 import Navbar from './components/NavbarComponent';
 import AccountList from './components/AccountComponent';
+import Home from './components/Home';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -11,6 +12,8 @@ const AppRoutes: React.FC = () => {
             <Routes>
                 <Route path="/customers" element={<CustomerList />} />
                 <Route path="/accounts" element={<AccountList />} />
+                <Route path="/home" element={<Home />} />
+
             </Routes>
         </BrowserRouter>
     );

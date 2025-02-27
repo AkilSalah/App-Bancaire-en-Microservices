@@ -81,8 +81,8 @@ const CustomerList: React.FC = () => {
         </button>
       </div>
 
-      <div className="font-sans overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="font-sans m-5 overflow-x-auto">
+        <table className="min-w-full rounded-5 divide-y divide-gray-200">
           <thead className="bg-gray-100 whitespace-nowrap">
             <tr>
               <th className="px-4 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
