@@ -22,7 +22,7 @@ const Navbar = () => {
               >
                   <ul className="flex w-full flex-col items-center space-y-2 lg:flex-row lg:justify-center lg:space-y-0">
                       <li className="lg:mr-12">
-                        <Link to="/home" className="rounded text-gray-700 cursor-pointer transition focus:outline-none focus:ring-blue-700 focus:ring-offset-2 hover:text-orange-500 block font-semibold text-[16px]"
+                        <Link to="" className="rounded text-gray-700 cursor-pointer transition focus:outline-none focus:ring-blue-700 focus:ring-offset-2 hover:text-orange-500 block font-semibold text-[16px]"
                         >
                         Home
                         </Link>

@@ -1,64 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { Account } from "../Models/Account";
+import type React from "react"
+import { useState, useEffect } from "react"
+import {Account} from "../Models/Account";
+
+
 
 interface AccountModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onSubmit: (account: Omit<Account, 'id'>) => void;
-    account?: Account;
-    customers: { id: number; name: string }[]; // Pour la liste des clients
+    isOpen: boolean
+    onClose: () => void
+    onSubmit: (account: Omit<Account, "id">) => void
+    account?: Account
+    customers: { id: number; name: string }[]
 }
 
 const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, onSubmit, account, customers }) => {
     const [formData, setFormData] = useState({
         balance: 0,
-        type: 'COURANT',
+        type: "COURANT" as "COURANT" | "EPARGNE",
         customerId: null as number | null,
-    });
+    })
 
     useEffect(() => {
-        if (account) {
-            setFormData({
-                balance: account.balance,
-                type: account.type,
-                customerId: account.customerId,
-            });
-        } else {
-            setFormData({
-                balance: 0,
-                type: 'COURANT',
-                customerId: null,
-            });
+        if (isOpen) {
+            if (account) {
+                setFormData({
+                    balance: account.balance,
+                    type: account.type,
+                    customerId: account.customerId,
+                })
+            } else {
+                setFormData({
+                    balance: 0,
+                    type: "COURANT",
+                    customerId: null,
+                })
+            }
         }
-    }, [account]);
+    }, [isOpen, account])
 
     if (!isOpen) {
-        return null;
+        return null
     }
 
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
         if (formData.customerId === null) {
-            alert("Veuillez sélectionner un client");
-            return;
+            alert("Veuillez sélectionner un client")
+            return
         }
-        onSubmit(formData as Omit<Account, 'id'>);
-    };
+
+        onSubmit(formData as Omit<Account, "id">)
+
+        if (!account) {
+            setFormData({
+                balance: 0,
+                type: "COURANT",
+                customerId: null,
+            })
+        }
+    }
+
+    const handleClose = () => {
+        setFormData({
+            balance: 0,
+            type: "COURANT",
+            customerId: null,
+        })
+        onClose()
+    }
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-lg w-96">
-                <h2 className="text-xl font-bold mb-4">
-                    {account ? 'Modifier le compte' : 'Créer un compte'}
-                </h2>
+                <h2 className="text-xl font-bold mb-4">{account ? "Modifier le compte" : "Créer un compte"}</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">
-                            Type de compte
-                        </label>
+                        <label className="block text-sm font-medium mb-1">Type de compte</label>
                         <select
                             value={formData.type}
-                            onChange={(e) => setFormData({ ...formData, type: e.target.value as 'COURANT' | 'EPARGNE' })}
+                            onChange={(e) => setFormData({ ...formData, type: e.target.value as "COURANT" | "EPARGNE" })}
                             className="w-full p-2 border rounded"
                             required
                         >
@@ -68,13 +87,11 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, onSubmit, 
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">
-                            Solde initial
-                        </label>
+                        <label className="block text-sm font-medium mb-1">Solde initial</label>
                         <input
                             type="number"
                             value={formData.balance}
-                            onChange={(e) => setFormData({ ...formData, balance: parseFloat(e.target.value) })}
+                            onChange={(e) => setFormData({ ...formData, balance: Number.parseFloat(e.target.value) })}
                             className="w-full p-2 border rounded"
                             required
                             min="0"
@@ -83,12 +100,12 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, onSubmit, 
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">
-                            Client
-                        </label>
+                        <label className="block text-sm font-medium mb-1">Client</label>
                         <select
-                            value={formData.customerId || ''}
-                            onChange={(e) => setFormData({ ...formData, customerId: parseInt(e.target.value) })}
+                            value={formData.customerId || ""}
+                            onChange={(e) =>
+                                setFormData({ ...formData, customerId: e.target.value ? Number.parseInt(e.target.value) : null })
+                            }
                             className="w-full p-2 border rounded"
                             required
                         >
@@ -104,22 +121,20 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, onSubmit, 
                     <div className="flex justify-end gap-2">
                         <button
                             type="button"
-                            onClick={onClose}
+                            onClick={handleClose}
                             className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded"
                         >
                             Annuler
                         </button>
-                        <button
-                            type="submit"
-                            className="px-4 py-2 text-sm text-white bg-orange-400 hover:bg-orange-500 rounded"
-                        >
-                            {account ? 'Modifier' : 'Créer'}
+                        <button type="submit" className="px-4 py-2 text-sm text-white bg-orange-400 hover:bg-orange-500 rounded">
+                            {account ? "Modifier" : "Créer"}
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default AccountModal;
+export default AccountModal
+

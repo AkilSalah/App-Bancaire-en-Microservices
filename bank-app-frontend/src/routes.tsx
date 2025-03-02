@@ -12,7 +12,7 @@ const AppRoutes: React.FC = () => {
             <Routes>
                 <Route path="/customers" element={<CustomerList />} />
                 <Route path="/accounts" element={<AccountList />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="" element={<Home />} />
 
             </Routes>
         </BrowserRouter>

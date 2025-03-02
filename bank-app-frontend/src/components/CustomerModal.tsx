@@ -33,6 +33,12 @@ const CustomerModal: React.FC<CustomerModalProps> = ({ isOpen, onClose, onSubmit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
+    if(!customer){
+      setFormData({
+        name: '',
+        email: ''
+      })
+    }
   };
 
   return (
